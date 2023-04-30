@@ -1,19 +1,19 @@
 #!/usr/bin/python
 
-import time, uuid, requests, urllib2, paramiko, json
+import time, uuid, requests, paramiko, json
 from random import randint
 
 from flask import Flask, jsonify, abort, request, make_response, url_for, Response
 from flask_cors import CORS, cross_origin
 
-from dse.cluster import Cluster, ExecutionProfile, EXEC_PROFILE_DEFAULT
-from dse.auth import PlainTextAuthProvider
-from dse.policies import DCAwareRoundRobinPolicy,TokenAwarePolicy, ConstantSpeculativeExecutionPolicy
-from dse import ConsistencyLevel
+from cassandra.cluster import Cluster, ExecutionProfile, EXEC_PROFILE_DEFAULT
+from cassandra.auth import PlainTextAuthProvider
+from cassandra.policies import DCAwareRoundRobinPolicy,TokenAwarePolicy, ConstantSpeculativeExecutionPolicy
+from cassandra import ConsistencyLevel
 
 from ssl import PROTOCOL_TLSv1, CERT_REQUIRED, CERT_OPTIONAL
 
-from ConfigParser import ConfigParser
+from configparser import ConfigParser
 
 app = Flask(__name__)
 CORS(app)
@@ -51,7 +51,7 @@ profile1 = ExecutionProfile( load_balancing_policy=DCAwareRoundRobinPolicy(local
                             consistency_level = ConsistencyLevel.ONE
                             )
 
-print "Connecting to cluster"
+print ("Connecting to cluster")
 
 cluster = Cluster( contact_points=contactpoints,
                    auth_provider=auth_provider,
@@ -61,7 +61,7 @@ cluster = Cluster( contact_points=contactpoints,
 
 
 session = cluster.connect()
-print "Connected to cluster"
+print ("Connected to cluster")
 
 session.execute (ks_query)
 session.execute (""" CREATE TABLE IF NOT EXISTS  demo.table2 (     bucket text,     ts timeuuid,     d text,     data1 text,     data2 text,     data3 text,     PRIMARY KEY (bucket, ts)) WITH CLUSTERING ORDER BY (ts desc) """)
@@ -72,9 +72,11 @@ def detectCluster():
    clusterInfo = []
    nodeInfo = []
    url = """http://%s:%s/%s/nodes""" % (lcm, lcmport, clustername)
-   print url
-   response = urllib2.urlopen(url)
-   data = response.read()
+   print (url)
+   response = requests.get(url)
+   print(response.status_code)
+   print(response.content)
+   data = response.content
    values = json.loads(data)
    for i in values:
       clusterInfo.append([i["node_ip"], i["dc"]])
@@ -189,7 +191,7 @@ def writev0():
                             consistency_level = CL
                             )
 
-      print "Connecting to cluster"
+      print ("Connecting to cluster")
 
       cluster = Cluster( contact_points=contactpoints,
                    auth_provider=auth_provider,
@@ -293,7 +295,7 @@ def read():
                             consistency_level = CL
                             )
 
-      print "Connecting to cluster"
+      print ("Connecting to cluster")
 
       cluster = Cluster( contact_points=contactpoints,
                    auth_provider=auth_provider,
@@ -405,8 +407,10 @@ def nodefull():
    clusterInfo = []
    nodeInfo = []
    url = "http://%s:%s/%s/nodes""" % (lcm, lcmport, clustername)
-   response = urllib2.urlopen(url)
-   data = json.loads(response.read())
+   print(url)
+   response = requests.get(url)
+   print(response.status_code)
+   data = json.loads(response.content)
    return json.dumps(data)
 
 

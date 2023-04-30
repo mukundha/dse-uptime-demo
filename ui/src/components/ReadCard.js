@@ -1,9 +1,6 @@
 import React from "react";
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
-import Card from 'material-kit-react/components/Card/Card';
-import CardHeader from 'material-kit-react/components/Card/CardHeader';
-import CardBody from 'material-kit-react/components/Card/CardBody';
 
 
 class ReadCard extends React.Component {
@@ -13,11 +10,7 @@ class ReadCard extends React.Component {
     render() {
         return (
             <div className={"root"}>
-                <Card className={"classes"}>
-                    <CardHeader className={"cardheader"} style={{paddingTop: '20px'}}>BROWSING CATALOG</CardHeader>
-                    <CardBody className={"cardbody"}>
                     <div className={"cardtext"}>
-
                     {
                         [...this.props.reads].reverse().map((read, index) => {
                             let imageUrl= "";
@@ -32,8 +25,8 @@ class ReadCard extends React.Component {
                             }
                             return (
                               <div key={index}>
-                                <img src={imageUrl} alt={read.dc}  height="36" width="58" style={{ "padding-right": "2em"}} />
-                                Count: {read.count}, Result: {read.result}
+                                {/* <img src={imageUrl} alt={read.dc}  height="36" width="58" style={{ "padding-right": "2em"}} /> */}
+                                {read.dc} Count: {read.count}, Result: {read.result}
                               </div>
                             )
                         })
@@ -43,8 +36,7 @@ class ReadCard extends React.Component {
                     {/* {JSON.stringify([...this.props.reads].reverse())} */}
 
                     </div>
-                    </CardBody>
-                </Card>
+                  
             </div>
         );
 

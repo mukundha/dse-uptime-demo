@@ -3,9 +3,6 @@ import ShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import MoneyIcon from '@material-ui/icons/AttachMoney';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
-import Card from 'material-kit-react/components/Card/Card';
-import CardHeader from 'material-kit-react/components/Card/CardHeader';
-import CardBody from 'material-kit-react/components/Card/CardBody';
 
 class WriteCard extends React.Component {
     componentDidMount() {
@@ -15,12 +12,9 @@ class WriteCard extends React.Component {
         
     const { classes } = this.props;
         return (
-            <div className={"root"}>
-                <Card className={"card"}>
-                    <CardHeader className={"cardheader"} style={{paddingTop: '20px'}}>PURCHASE TRANSACTIONS</CardHeader>
-                    <CardBody className={"cardbody"}>
-                    <div className={"cardtext"}>
-                    
+            <div className={"root"}>                
+                    PURCHASE TRANSACTIONS                    
+                    <div className={"cardtext"}>                    
                     {
                         [...this.props.writes].reverse().map((write, index) => {
                             if(write.result == "Successful"){
@@ -39,12 +33,9 @@ class WriteCard extends React.Component {
                               )
 			    }
                         }) 
-                    }
-                    
+                    }                    
                     {/* {JSON.stringify([...this.props.writes].reverse())} */}
                     </div>
-                    </CardBody>
-                </Card>
             </div>
         );
 

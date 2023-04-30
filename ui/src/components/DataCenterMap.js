@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
-import CardHeader from 'material-kit-react/components/Card/CardHeader';
+
 
 import { scaleLinear } from "d3-scale"
 import { geoAzimuthalEqualArea } from "d3-geo"
@@ -84,7 +84,7 @@ class DataCenterMap extends React.Component {
       return (
         <div className={"spanningDiv"}>
             <div className={"spanningDiv"}>
-              <CardHeader className={"cardheader"} style={{paddingTop: '20px', position: 'absolute', width: '75%'}}>DATASTAX CLUSTER
+              DATASTAX CLUSTER
                         { this.props.fullscreen != "dc-paper" ? 
                 <IconButton onClick={() => { this.props.updateValue("fullscreen", "dc-paper")}} color="primary" aria-label="Fullscreen">
                             <FullscreenIcon />
@@ -94,8 +94,7 @@ class DataCenterMap extends React.Component {
                             <FullscreenExitIcon />
                 </IconButton>
 
-                }
-        </CardHeader>
+                }        
               <ComposableMap 
                   style={{ 
                     width: "100%", 
